@@ -6,8 +6,9 @@ public class MovementController : MonoBehaviour
 {
     public float speed = 5f; // velocidad de movimiento del personaje
     public float jumpForce = 5f; // fuerza del salto del personaje
-    public float wallSlideSpeed = 1f;
+    public float wallSlideSpeed = 2f;
     public float wallJumpForce = 5f;
+    public float maxJumpHeight = 6f;
 
     private Rigidbody2D rb;
     public bool isTouchingGround = false; // verifica si el personaje esta en el suelo
@@ -42,6 +43,12 @@ public class MovementController : MonoBehaviour
         // saltar
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.K)) && (isTouchingGround || isTouchingWall))
         {
+            // verificar si la velocidad actual del personaje en el eje y es mayor que la mitad de la altura máxima permitida
+            if (rb.velocity.y > maxJumpHeight / 2f)
+            {
+                // limitar la velocidad actual del personaje en el eje y a la mitad de la altura máxima permitida
+                rb.velocity = new Vector2(rb.velocity.x, maxJumpHeight / 2f);
+            }
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
@@ -62,9 +69,7 @@ public class MovementController : MonoBehaviour
         {
             rb.gravityScale = 12f;
         }
-//   importanteeeeee
 
-        Debug.Log(isTouchingGround);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
