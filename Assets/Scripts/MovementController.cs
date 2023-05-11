@@ -1,58 +1,75 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MovementController : MonoBehaviour
 {
-    public float speed = 5f; // velocidad de movimiento del personaje
-    public float jumpForce = 5f; // fuerza del salto del personaje
+    public float speed = 5f;
+    public float jumpForce = 5f;
     public float wallSlideSpeed = 2f;
     public float wallJumpForce = 5f;
     public float maxJumpHeight = 6f;
 
     private Rigidbody2D rb;
-    public bool isTouchingGround = false; // verifica si el personaje esta en el suelo
-    public bool isTouchingWall = false; // verifica si el personaje está tocando una pared
+    public bool isTouchingGround = false;
+    public bool isTouchingWall = false;
     public bool canJump = true;
+    public bool isFacingRight = true; // variable para saber si el personaje está mirando hacia la derecha
+    public float dashVerticalForce = 10f;
+    public float dashHorizontalForce = 10f;
+    public float dashDuration = 1f;
+    private bool isDashing = false;
+    private float dashTimer = 0f;
+
+    [SerializeField] public Transform groundCheck;
+    [SerializeField] public Vector2 groundCheckSize;
+    [SerializeField] public Transform wallCheckL;
+    [SerializeField] public Vector2 wallCheckLSize;
+    [SerializeField] public Transform wallCheckR;
+    [SerializeField] public Vector2 wallCheckRSize;
+
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>(); // obtenemos la referencia al Rigidbody2D del personaje
+        rb = GetComponent<Rigidbody2D>();
 
-        // obtener y modificar el valor de gravityScale
         float gravityScale = rb.gravityScale;
         rb.gravityScale = 2f;
     }
 
     void Update()
     {
-        float horizontalMovement = Input.GetAxisRaw("Horizontal"); // obtenemos la entrada horizontal (izquierda/derecha)
+        float horizontalMovement = Input.GetAxisRaw("Horizontal");
 
-        // actualizamos la posicion del transform del personaje
         transform.position += Vector3.right * horizontalMovement * speed * Time.deltaTime;
-        
 
-        // si el personaje está tocando una pared y no está en el suelo, aplica la gravedad de la pared
-        if (isTouchingWall == true)
+        // actualizamos la variable isFacingRight dependiendo de la dirección del movimiento horizontal
+        if (horizontalMovement < 0)
+        {
+            isFacingRight = false;
+        }
+        else if (horizontalMovement > 0)
+        {
+            isFacingRight = true;
+        }
+
+        if (isTouchingWall)
         {
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlideSpeed, float.MaxValue));
             canJump = true;
             rb.gravityScale = 4f;
         }
 
-        // saltar
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.K)) && (isTouchingGround || isTouchingWall))
         {
-            // verificar si la velocidad actual del personaje en el eje y es mayor que la mitad de la altura máxima permitida
             if (rb.velocity.y > maxJumpHeight / 2f)
             {
-                // limitar la velocidad actual del personaje en el eje y a la mitad de la altura máxima permitida
                 rb.velocity = new Vector2(rb.velocity.x, maxJumpHeight / 2f);
             }
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
-        // si el personaje está en el suelo o no toca la pared, aplica la gravedad normal
         if (isTouchingGround && !isTouchingWall)
         {
             canJump = true;
@@ -64,37 +81,110 @@ public class MovementController : MonoBehaviour
             canJump = false;
         }
 
-        // si se deja de presionar la tecla de salto, aplica la gravedad normal
-        if ((Input.GetKeyUp(KeyCode.Space) && !isTouchingWall || Input.GetKeyUp(KeyCode.K) && !isTouchingWall))
+        if ((Input.GetKeyUp(KeyCode.Space) && (!wallCheckL && !wallCheckR) || Input.GetKeyUp(KeyCode.K) && (!wallCheckL && !wallCheckR)))
         {
             rb.gravityScale = 12f;
         }
 
+        if (Input.GetKeyDown(KeyCode.L) && !isDashing)
+        {
+            isDashing = true;
+            dashTimer = dashTimer+0.1f;
+
+            if (isFacingRight)
+            {
+                rb.AddForce(Vector2.right * dashHorizontalForce, ForceMode2D.Impulse);
+            }
+            else
+            {
+                rb.AddForce(Vector2.left * dashHorizontalForce, ForceMode2D.Impulse);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.K))
+            {
+                float dashVerticalDirection = Mathf.Sign(rb.velocity.y);
+                rb.AddForce(Vector2.up * dashVerticalDirection * dashVerticalForce, ForceMode2D.Impulse);
+            }
+        }
+
+        if (isDashing)
+        {
+            dashTimer += Time.deltaTime;
+
+            if (dashTimer >= dashDuration)
+            {
+                isDashing = false;
+            }
+        }
+        Debug.Log(isTouchingGround);
+        //Debug.Log(wallCheckR);
+        //Debug.Log(dashTimer);
+        //Debug.Log(dashDuration);
+        //Debug.Log(isFacingRight);
+    }   
+
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Ground"))
+            {
+                isTouchingGround = true;
+            }
+            if (collision.gameObject.CompareTag("Wall"))
+            {
+                isTouchingWall = true;
+            }
+
+        }
+        void OnCollisionExit2D(Collision2D collision)
+        {
+            Collider2D[] groundCollider = Physics2D.OverlapBoxAll(groundCheck.position,groundCheckSize, 0f);
+            bool isCollidingWithGround = false;
+            foreach (Collider2D col in groundCollider)
+            {
+                if (col.gameObject.CompareTag("Ground"))
+                {
+                    isCollidingWithGround = true;
+                    break;
+                }
+            }
+
+            // Check if touching left wall
+            Collider2D[] wallColliderLeft = Physics2D.OverlapBoxAll(wallCheckL.position, wallCheckLSize, 0f);
+            bool isCollidingWithWallLeft = false;
+            foreach (Collider2D col in wallColliderLeft)
+            {
+                if (col.gameObject.CompareTag("Wall"))
+                {
+                    isCollidingWithWallLeft = true;
+                    break;
+                }
+            }
+
+            // Check if touching right wall
+            Collider2D[] wallColliderRight = Physics2D.OverlapBoxAll(wallCheckR.position, wallCheckRSize, 0f);
+            bool isCollidingWithWallRight = false;
+            foreach (Collider2D col in wallColliderRight)
+            {
+                if (col.gameObject.CompareTag("Wall"))
+                {
+                    isCollidingWithWallRight = true;
+                    break;
+                }
+            }
+            isTouchingWall = isCollidingWithWallLeft || isCollidingWithWallRight;
+            isTouchingGround = isCollidingWithGround;
+        //Debug.Log("isCollidingWithWallLeft: " + isCollidingWithWallLeft);
+        //Debug.Log("isCollidingWithWallRight: " + isCollidingWithWallRight);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnDrawGizmos()
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isTouchingGround = true;
-        }
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            isTouchingWall = true;
-        }
-    
-    }
+        Gizmos.color = Color.red;
+        // Gizmos.DrawRay(groundCheck.position, groundCheckSize);
+        Gizmos.DrawCube(groundCheck.position, groundCheckSize);
+        Gizmos.DrawCube(wallCheckL.position, wallCheckLSize);
+        Gizmos.DrawCube(wallCheckR.position, wallCheckRSize);
 
-    void OnCollisionExit2D(Collision2D collision)   
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isTouchingGround = false;
-        }
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            isTouchingWall = false;
-        }
     }
 
 }
