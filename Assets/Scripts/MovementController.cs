@@ -6,7 +6,6 @@ public class MovementController : MonoBehaviour
 {
     public float speed = 5f; // velocidad de movimiento del personaje
     public float jumpForce = 5f; // fuerza del salto del personaje
-    public float gravityForce = 5f;
     public float wallSlideSpeed = 1f;
     public float wallJumpForce = 5f;
 
@@ -18,6 +17,10 @@ public class MovementController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>(); // obtenemos la referencia al Rigidbody2D del personaje
+
+        // obtener y modificar el valor de gravityScale
+        float gravityScale = rb.gravityScale;
+        rb.gravityScale = 2f;
     }
 
     void Update()
@@ -33,19 +36,20 @@ public class MovementController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlideSpeed, float.MaxValue));
             canJump = true;
+            rb.gravityScale = 4f;
         }
 
         // saltar
-        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && (isTouchingGround || isTouchingWall))
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.K)) && (isTouchingGround || isTouchingWall))
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
         // si el personaje está en el suelo o no toca la pared, aplica la gravedad normal
-        if (isTouchingGround || !isTouchingWall)
+        if (isTouchingGround && !isTouchingWall)
         {
             canJump = true;
-            gravityForce = 12f;
+            rb.gravityScale = 4f;
         }
 
         if (!isTouchingGround && !isTouchingWall)
@@ -54,9 +58,9 @@ public class MovementController : MonoBehaviour
         }
 
         // si se deja de presionar la tecla de salto, aplica la gravedad normal
-        if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W) && !isTouchingWall)
+        if ((Input.GetKeyUp(KeyCode.Space) && !isTouchingWall || Input.GetKeyUp(KeyCode.K) && !isTouchingWall))
         {
-            gravityForce = 25f;
+            rb.gravityScale = 12f;
         }
 //   importanteeeeee
 
