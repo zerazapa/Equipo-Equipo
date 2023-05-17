@@ -15,19 +15,13 @@ public class MovementController : MonoBehaviour
     public bool isTouchingGround = false;
     public bool isTouchingWall = false;
     public bool canJump = true;
-    public bool isFacingRight = true; // variable para saber si el personaje está mirando hacia la derecha
-    public float dashVerticalForce = 10f;
+    public float whereFacing = 1f; // 0=L 1=R 2=U 3=D
+    public float dashVerticalForce = 7f;
     public float dashHorizontalForce = 10f;
+    public bool canDash = true;
+    public bool isDashing = false;
     public float dashDuration = 1f;
-    private bool isDashing = false;
-    private float dashTimer = 0f;
-
-    [SerializeField] public Transform groundCheck;
-    [SerializeField] public Vector2 groundCheckSize;
-    [SerializeField] public Transform wallCheckL;
-    [SerializeField] public Vector2 wallCheckLSize;
-    [SerializeField] public Transform wallCheckR;
-    [SerializeField] public Vector2 wallCheckRSize;
+    private float dashStartTime;
 
 
     void Start()
@@ -40,20 +34,6 @@ public class MovementController : MonoBehaviour
 
     void Update()
     {
-        float horizontalMovement = Input.GetAxisRaw("Horizontal");
-
-        transform.position += Vector3.right * horizontalMovement * speed * Time.deltaTime;
-
-        // actualizamos la variable isFacingRight dependiendo de la dirección del movimiento horizontal
-        if (horizontalMovement < 0)
-        {
-            isFacingRight = false;
-        }
-        else if (horizontalMovement > 0)
-        {
-            isFacingRight = true;
-        }
-
         if (isTouchingWall)
         {
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlideSpeed, float.MaxValue));
@@ -81,110 +61,106 @@ public class MovementController : MonoBehaviour
             canJump = false;
         }
 
-        if ((Input.GetKeyUp(KeyCode.Space) && (!wallCheckL && !wallCheckR) || Input.GetKeyUp(KeyCode.K) && (!wallCheckL && !wallCheckR)))
+        if ((Input.GetKeyUp(KeyCode.Space) && (!isTouchingWall) || Input.GetKeyUp(KeyCode.K) && (!isTouchingWall)))
         {
             rb.gravityScale = 12f;
         }
 
-        if (Input.GetKeyDown(KeyCode.L) && !isDashing)
+        if (Input.GetKeyDown(KeyCode.L) && canDash && !isDashing)
         {
-            isDashing = true;
-            dashTimer = dashTimer+0.1f;
-
-            if (isFacingRight)
-            {
-                rb.AddForce(Vector2.right * dashHorizontalForce, ForceMode2D.Impulse);
-            }
-            else
-            {
-                rb.AddForce(Vector2.left * dashHorizontalForce, ForceMode2D.Impulse);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.K))
-            {
-                float dashVerticalDirection = Mathf.Sign(rb.velocity.y);
-                rb.AddForce(Vector2.up * dashVerticalDirection * dashVerticalForce, ForceMode2D.Impulse);
-            }
+            Dash();
+            dashStartTime = Time.time;
         }
-
-        if (isDashing)
-        {
-            dashTimer += Time.deltaTime;
-
-            if (dashTimer >= dashDuration)
-            {
-                isDashing = false;
-            }
-        }
-        Debug.Log(isTouchingGround);
-        //Debug.Log(wallCheckR);
-        //Debug.Log(dashTimer);
-        //Debug.Log(dashDuration);
-        //Debug.Log(isFacingRight);
     }   
 
-        void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.gameObject.CompareTag("Ground"))
-            {
-                isTouchingGround = true;
-            }
-            if (collision.gameObject.CompareTag("Wall"))
-            {
-                isTouchingWall = true;
-            }
-
-        }
-        void OnCollisionExit2D(Collision2D collision)
-        {
-            Collider2D[] groundCollider = Physics2D.OverlapBoxAll(groundCheck.position,groundCheckSize, 0f);
-            bool isCollidingWithGround = false;
-            foreach (Collider2D col in groundCollider)
-            {
-                if (col.gameObject.CompareTag("Ground"))
-                {
-                    isCollidingWithGround = true;
-                    break;
-                }
-            }
-
-            // Check if touching left wall
-            Collider2D[] wallColliderLeft = Physics2D.OverlapBoxAll(wallCheckL.position, wallCheckLSize, 0f);
-            bool isCollidingWithWallLeft = false;
-            foreach (Collider2D col in wallColliderLeft)
-            {
-                if (col.gameObject.CompareTag("Wall"))
-                {
-                    isCollidingWithWallLeft = true;
-                    break;
-                }
-            }
-
-            // Check if touching right wall
-            Collider2D[] wallColliderRight = Physics2D.OverlapBoxAll(wallCheckR.position, wallCheckRSize, 0f);
-            bool isCollidingWithWallRight = false;
-            foreach (Collider2D col in wallColliderRight)
-            {
-                if (col.gameObject.CompareTag("Wall"))
-                {
-                    isCollidingWithWallRight = true;
-                    break;
-                }
-            }
-            isTouchingWall = isCollidingWithWallLeft || isCollidingWithWallRight;
-            isTouchingGround = isCollidingWithGround;
-        //Debug.Log("isCollidingWithWallLeft: " + isCollidingWithWallLeft);
-        //Debug.Log("isCollidingWithWallRight: " + isCollidingWithWallRight);
-    }
-
-    private void OnDrawGizmos()
+    void FixedUpdate()
     {
-        Gizmos.color = Color.red;
-        // Gizmos.DrawRay(groundCheck.position, groundCheckSize);
-        Gizmos.DrawCube(groundCheck.position, groundCheckSize);
-        Gizmos.DrawCube(wallCheckL.position, wallCheckLSize);
-        Gizmos.DrawCube(wallCheckR.position, wallCheckRSize);
+        float horizontalMovement = Input.GetAxisRaw("Horizontal");
+        float verticalMovement = Input.GetAxisRaw("Vertical");
 
+        transform.position += Vector3.right * horizontalMovement * speed * Time.deltaTime;
+
+        if (horizontalMovement < 0f)
+        {
+            whereFacing = 0f;
+        }
+        if (horizontalMovement > 0f)
+        {
+            whereFacing = 1f;
+        }
+        if (verticalMovement > 0f)
+        {
+            whereFacing = 2f;
+        }
+        if (verticalMovement < -0.1f)
+        {
+            whereFacing = 3f;
+        }
+        // Si ha pasado el tiempo máximo del dash, ya no permitir el dash
+        if (isDashing && Time.time >= dashStartTime + dashDuration)
+        {
+            isDashing = false;
+            rb.velocity = Vector2.zero;
+            canDash = true;
+        }
+        Debug.Log(isDashing);
+    }
+    void Dash()
+    {
+        if (whereFacing == 1f)
+        {
+           rb.AddForce(Vector2.right * dashHorizontalForce, ForceMode2D.Impulse);
+        }
+        else if (whereFacing == 0f)
+        {
+            rb.AddForce(Vector2.left * dashHorizontalForce, ForceMode2D.Impulse);
+        }
+        else if (whereFacing == 2f)
+        {
+            rb.AddForce(Vector2.up * dashVerticalForce, ForceMode2D.Impulse);
+        }
+        else if (whereFacing == 3f)
+        {
+            rb.AddForce(Vector2.down * dashHorizontalForce, ForceMode2D.Impulse);
+        }
+
+    isDashing = true;
+    // Detener el dash después de dashDuration segundos
+    Invoke("StopDashing", dashDuration);
     }
 
+    void StopDashing()
+    {
+        isDashing = false;
+        canDash = false;
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isTouchingGround = true;
+        }
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            isTouchingWall = true;
+        }
+        if (collision.gameObject.CompareTag("Ground") || (collision.gameObject.CompareTag("Wall")))
+        {
+            canDash = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isTouchingGround = false;
+        }
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            isTouchingWall = false;
+        }
+    }
+        
 }
