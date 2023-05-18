@@ -15,18 +15,23 @@ public class MovementController : MonoBehaviour
     public bool isTouchingGround = false;
     public bool isTouchingWall = false;
     public bool canJump = true;
-    public float whereFacing = 1f; // 0=L 1=R 2=U 3=D
+    public float hFacing = 1f; // 0=L 1=R
+    public float vFacing = 1f; //0=U 1=C 2=D
+    public float lastFacing = 0f; //0=h 1=v
     public float dashVerticalForce = 7f;
     public float dashHorizontalForce = 10f;
     public bool canDash = true;
     public bool isDashing = false;
     public float dashDuration = 1f;
     private float dashStartTime;
+    private Animator animator;
 
+    public bool canMelee = true;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
         float gravityScale = rb.gravityScale;
         rb.gravityScale = 2f;
@@ -71,6 +76,7 @@ public class MovementController : MonoBehaviour
             Dash();
             dashStartTime = Time.time;
         }
+        
     }   
 
     void FixedUpdate()
@@ -80,21 +86,35 @@ public class MovementController : MonoBehaviour
 
         transform.position += Vector3.right * horizontalMovement * speed * Time.deltaTime;
 
-        if (horizontalMovement < 0f)
+        if (horizontalMovement < -0.1f)
         {
-            whereFacing = 0f;
+            hFacing = -1f;
+            lastFacing = 0f;
+            animator.SetFloat("hFacing", 0f);
         }
-        if (horizontalMovement > 0f)
+        else if (horizontalMovement > 0.1f)
         {
-            whereFacing = 1f;
+            hFacing = 0f;
+            lastFacing = 0f;
+            animator.SetFloat("hFacing", 1f);
         }
-        if (verticalMovement > 0f)
+        if (verticalMovement > .1f)
         {
-            whereFacing = 2f;
+            vFacing = 1f;
+            lastFacing = 1f;
+            animator.SetFloat("vFacing", 1f);
         }
-        if (verticalMovement < -0.1f)
+        else if (verticalMovement == 0f)
         {
-            whereFacing = 3f;
+            vFacing = 0f;
+            lastFacing = 0f;
+            animator.SetFloat("vFacing", 0f);
+        }
+        else
+        {
+            vFacing = -1f;
+            lastFacing = 1f;
+            animator.SetFloat("vFacing", -1f);
         }
         // Si ha pasado el tiempo máximo del dash, ya no permitir el dash
         if (isDashing && Time.time >= dashStartTime + dashDuration)
@@ -103,23 +123,24 @@ public class MovementController : MonoBehaviour
             rb.velocity = Vector2.zero;
             canDash = true;
         }
-        Debug.Log(isDashing);
+        Debug.Log(canMelee);
+
     }
     void Dash()
     {
-        if (whereFacing == 1f)
+        if (lastFacing == 0f && hFacing == 0f)
         {
            rb.AddForce(Vector2.right * dashHorizontalForce, ForceMode2D.Impulse);
         }
-        else if (whereFacing == 0f)
+        else if (lastFacing == 0f && hFacing == -1f)
         {
             rb.AddForce(Vector2.left * dashHorizontalForce, ForceMode2D.Impulse);
         }
-        else if (whereFacing == 2f)
+        else if (lastFacing == 1f && vFacing == 1f)
         {
             rb.AddForce(Vector2.up * dashVerticalForce, ForceMode2D.Impulse);
         }
-        else if (whereFacing == 3f)
+        else if (lastFacing == 1f && vFacing == -1f)
         {
             rb.AddForce(Vector2.down * dashHorizontalForce, ForceMode2D.Impulse);
         }
