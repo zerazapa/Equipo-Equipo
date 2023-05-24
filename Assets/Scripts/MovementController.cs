@@ -123,7 +123,6 @@ public class MovementController : MonoBehaviour
             rb.velocity = Vector2.zero;
             canDash = true;
         }
-        Debug.Log(canMelee);
 
     }
     void Dash()
