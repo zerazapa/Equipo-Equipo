@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartMenu : MonoBehaviour
+public class RestartLevel : MonoBehaviour
 {
-        public GameObject Transition;
-
     public void StartGame()
     {
-        Transition.SetActive(true);
-    }    
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }

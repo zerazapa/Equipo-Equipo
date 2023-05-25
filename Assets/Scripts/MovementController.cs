@@ -11,6 +11,9 @@ public class MovementController : MonoBehaviour
     public float wallJumpForce = 5f;
     public float maxJumpHeight = 6f;
 
+    public int health = 100;
+
+
     private Rigidbody2D rb;
     public bool isTouchingGround = false;
     public bool isTouchingWall = false;
@@ -182,6 +185,21 @@ public class MovementController : MonoBehaviour
         {
             isTouchingWall = false;
         }
+    }
+   
+    public void TakeDamage(int damageAmount)
+    {
+        health -= damageAmount;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+    
+    private void Die()
+    {
+        Debug.Log("Player has died.");
+        animator.SetBool ("IsDead", true);
     }
         
 }
