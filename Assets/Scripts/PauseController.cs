@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class PauseController : MonoBehaviour
 {
+
+        public GameObject Transition;
+
     public void PauseGame()
     {
         Time.timeScale = 0;
@@ -25,7 +28,7 @@ public class PauseController : MonoBehaviour
 
     public void LoadLevel(string levelName)
     {
-        SceneManager.LoadScene(levelName);
         Debug.Log("Cargando " + levelName);
+        Transition.SetActive(true);
     }
 }
