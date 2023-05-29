@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerFollow : MonoBehaviour
+public class SkyFollow : MonoBehaviour
 {
     public Transform target; // reference to the player's Transform component
     public float xOffset = 0f; // horizontal offset from the player's position
