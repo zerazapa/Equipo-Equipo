@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     public GameObject bulletPrefab;
-    public Transform bulletSpawnPoint;
+    public Transform bulletSpawnLeft;
+    public Transform bulletSpawnRight;
     public float bulletSpeed = 10f;
     public float gunCooldown = 3f;
     public float swordCooldown = 0.2f;
@@ -25,7 +26,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (!canMelee)
         {
-            // Si el ataque cuerpo a cuerpo está en progreso, no permitir movimiento
+            // Si el ataque cuerpo a cuerpo estï¿½ en progreso, no permitir movimiento
             movementController.enabled = false;
         }
         else
@@ -51,26 +52,26 @@ public class PlayerAttack : MonoBehaviour
     {
         canShoot = false;
 
-        // Obtener la rotación del personaje desde la variable "whereFacing" del script MovementController
+        // Obtener la rotaciï¿½n del personaje desde la variable "whereFacing" del script MovementController
         Quaternion rotation = Quaternion.Euler(0f, 0f, 0f);
         if (facing == -1)
         {
             // Disparar a la izquierda
             rotation = Quaternion.Euler(0f, 180f, 0f);
+            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnLeft.position, rotation);
+            Rigidbody2D bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
+            Vector3 bulletDirection = bullet.transform.right;
+            bulletRigidbody.velocity = bulletDirection * bulletSpeed;
         }
         else if (facing == 0)
         {
             // Disparar a la derecha
             rotation = Quaternion.Euler(0f, 0f, 0f);
+            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnRight.position, rotation);
+            Rigidbody2D bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
+            Vector3 bulletDirection = bullet.transform.right;
+            bulletRigidbody.velocity = bulletDirection * bulletSpeed;
         }
-
-        // Crear la bala y obtener su Rigidbody
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, rotation);
-        Rigidbody2D bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
-
-        // Aplicar velocidad a la bala en la dirección deseada
-        Vector3 bulletDirection = bullet.transform.right;
-        bulletRigidbody.velocity = bulletDirection * bulletSpeed;
 
         yield return new WaitForSeconds(gunCooldown);
 
@@ -85,4 +86,5 @@ public class PlayerAttack : MonoBehaviour
         canMelee = true;
         animator.SetBool("isMelee", false);
     }
+
 }

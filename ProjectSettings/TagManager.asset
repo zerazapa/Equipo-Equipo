@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Ground
   - Wall
+  - Enemy
+  - Bullet
+  - PBullet
+  - EBullet
+  - PSword
+  - ESword
   layers:
   - Default
   - TransparentFX

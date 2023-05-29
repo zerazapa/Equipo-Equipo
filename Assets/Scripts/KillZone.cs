@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class KillZone : MonoBehaviour
 {     
-    public int damageAmount = 1000;
     public GameObject MovementController;
 
-    private void OnTriggerEnter2D()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        MovementController player = GetComponent<MovementController>();
-        player.TakeDamage(damageAmount);
-
+        if (collision.gameObject.CompareTag("Player"))
+        {
+        Health objectHealth = collision.gameObject.GetComponent<Health>();
+        objectHealth.HP = 0;
+        }
     }
-
 
 }

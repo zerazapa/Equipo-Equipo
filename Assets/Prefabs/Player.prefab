@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3704045145370315195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6982995569396629834}
+  m_Layer: 0
+  m_Name: gun right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6982995569396629834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3704045145370315195}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.158, y: 0, z: 0}
+  m_LocalScale: {x: 0.27592143, y: 0.31973195, z: 1.328886}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5885155805633935914}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5885155805633935919
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,6 +43,7 @@ GameObject:
   - component: {fileID: 5885155805633935915}
   - component: {fileID: 5885155805633935916}
   - component: {fileID: 5885155805633935912}
+  - component: {fileID: 6749101683344470672}
   - component: {fileID: 5885155805633935918}
   - component: {fileID: 5885155805633935913}
   - component: {fileID: 5885155805633935911}
@@ -35,6 +67,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5885155805833398313}
+  - {fileID: 6982995569396629834}
   - {fileID: 5885155805807498028}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -79,7 +112,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: -1237935166, guid: ff8a0406b345a7f4d84168c8f3e571ba, type: 3}
   m_Color: {r: 0.29036078, g: 0.8867924, b: 0.10517211, a: 1}
   m_FlipX: 0
@@ -134,12 +167,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3528127329081462950, guid: 4c73fbea5e5657047916c325251a948a, type: 3}
-  bulletSpawnPoint: {fileID: 5885155805833398313}
+  bulletSpawnLeft: {fileID: 5885155805833398313}
+  bulletSpawnRight: {fileID: 6982995569396629834}
   bulletSpeed: 20
   gunCooldown: 3
   swordCooldown: 0.5
   facing: 0
   canMelee: 1
+--- !u!114 &6749101683344470672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5885155805633935919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80f79f7fa832fd4eab91b0ca961ba8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: 20
+  deadColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!50 &5885155805633935918
 Rigidbody2D:
   serializedVersion: 4
@@ -207,6 +255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5885155805807498028}
   - component: {fileID: 5885155805807498027}
+  - component: {fileID: 3224171593069568760}
   m_Layer: 0
   m_Name: sword
   m_TagString: Untagged
@@ -227,7 +276,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5885155805633935914}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &5885155805807498027
 BoxCollider2D:
@@ -255,6 +304,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.108693734, y: 0.08853954}
   m_EdgeRadius: 0
+--- !u!114 &3224171593069568760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5885155805807498029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b392c0386d3e1948895c86b1f9e16a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5885155805833398314
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5885155805833398313}
   m_Layer: 0
-  m_Name: gun
+  m_Name: gun left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -279,7 +340,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5885155805833398314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.158, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
