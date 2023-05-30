@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 23ea9b873282e2649860091ab19f0cb2
+guid: f46fa0d0320c91b479ea057fc8c0c80e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,12 +105,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EspAttack_0
+      name: MosWalk_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -119,19 +119,40 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d277d69079c37c54fb3fffd38ec1238a
-      internalID: 1150893389
+      spriteID: b121b2bb565da0846ba603d0ae581a34
+      internalID: 222701086
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EspAttack_1
+      name: MosWalk_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8ed130b4a72faa48bd7b7fa817fed01
+      internalID: -1343925306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MosWalk_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
-        width: 64
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -140,19 +161,40 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd2fb137a18b3954ba02a54d27292630
-      internalID: -1145985821
+      spriteID: 1d9d8cc683c68ce43bf485e1a6275c29
+      internalID: -1859951424
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EspAttack_2
+      name: MosWalk_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26fbf3deb3f9b9149bf92265b99ec314
+      internalID: 1568008447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MosWalk_4
       rect:
         serializedVersion: 2
         x: 128
         y: 0
-        width: 64
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -161,19 +203,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2b755fc10e74094a8dd8f856426c46b
-      internalID: -495789962
+      spriteID: 1caeac1627fbc704895fdc31a2900efc
+      internalID: -760462971
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EspAttack_3
+      name: MosWalk_5
       rect:
         serializedVersion: 2
-        x: 192
+        x: 160
         y: 0
-        width: 64
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -182,50 +224,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4dd0878105cd4b748b87075307545155
-      internalID: -2111111556
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EspAttack_4
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 64
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1081f91af4dbe644b8089e326346a690
-      internalID: -1283114581
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EspAttack_5
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 0
-        width: 64
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c28f808458820384da9aaad84cd32da8
-      internalID: -1374018708
+      spriteID: 354e51127a316ac44bf0f9da4e675579
+      internalID: 1303253488
       vertices: []
       indices: 
       edges: []
@@ -241,12 +241,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      EspAttack_5: -1374018708
-      EspAttack_4: -1283114581
-      EspAttack_1: -1145985821
-      EspAttack_2: -495789962
-      EspAttack_0: 1150893389
-      EspAttack_3: -2111111556
+      MosWalk_4: -760462971
+      MosWalk_5: 1303253488
+      MosWalk_2: -1859951424
+      MosWalk_0: 222701086
+      MosWalk_3: 1568008447
+      MosWalk_1: -1343925306
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 23ea9b873282e2649860091ab19f0cb2
+guid: a50084ed395260144b81c0f9b640dfc3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EspAttack_0
+      name: MosAttack_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,14 +119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d277d69079c37c54fb3fffd38ec1238a
-      internalID: 1150893389
+      spriteID: 0549f89b3eb39f94d9051b7674da8602
+      internalID: 1020575877
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EspAttack_1
+      name: MosAttack_1
       rect:
         serializedVersion: 2
         x: 64
@@ -140,14 +140,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd2fb137a18b3954ba02a54d27292630
-      internalID: -1145985821
+      spriteID: 3b862ecf337d94d439b666053680ecb8
+      internalID: 835922936
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EspAttack_2
+      name: MosAttack_2
       rect:
         serializedVersion: 2
         x: 128
@@ -161,14 +161,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2b755fc10e74094a8dd8f856426c46b
-      internalID: -495789962
+      spriteID: fdd2787fd6e636142b8a422bd75314d0
+      internalID: 1999041657
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EspAttack_3
+      name: MosAttack_3
       rect:
         serializedVersion: 2
         x: 192
@@ -182,14 +182,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4dd0878105cd4b748b87075307545155
-      internalID: -2111111556
+      spriteID: d640adf74839cdd489d899a6b9257789
+      internalID: 1552143974
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EspAttack_4
+      name: MosAttack_4
       rect:
         serializedVersion: 2
         x: 256
@@ -203,14 +203,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1081f91af4dbe644b8089e326346a690
-      internalID: -1283114581
+      spriteID: e2b1ebfd1e3d4ee4b9209607624b251c
+      internalID: -1175681482
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EspAttack_5
+      name: MosAttack_5
       rect:
         serializedVersion: 2
         x: 320
@@ -224,8 +224,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c28f808458820384da9aaad84cd32da8
-      internalID: -1374018708
+      spriteID: 1191dc4f822bcb74898a6191ba0e2049
+      internalID: 1334011902
       vertices: []
       indices: 
       edges: []
@@ -241,12 +241,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      EspAttack_5: -1374018708
-      EspAttack_4: -1283114581
-      EspAttack_1: -1145985821
-      EspAttack_2: -495789962
-      EspAttack_0: 1150893389
-      EspAttack_3: -2111111556
+      MosAttack_4: -1175681482
+      MosAttack_1: 835922936
+      MosAttack_2: 1999041657
+      MosAttack_5: 1334011902
+      MosAttack_3: 1552143974
+      MosAttack_0: 1020575877
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

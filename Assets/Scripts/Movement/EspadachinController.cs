@@ -13,6 +13,7 @@ public class EspadachinController : MonoBehaviour
     public Transform RLimit;
     public float followRadius = 2.2f;
     public float followSpeed = 4f;
+    public float attackRatius = 2f;
     public int damageAmount = 10;
     private Health health;
     private bool isAttacking = false;
@@ -33,7 +34,7 @@ public class EspadachinController : MonoBehaviour
         float distanceToRLimit = Vector2.Distance(transform.position, RLimit.position);
         float positionPlayer = Vector2.SignedAngle(transform.position, player.position);
 
-        Debug.Log(distanceToRLimit);
+        //Debug.Log(distanceToRLimit);
 
         if (positionPlayer < 0)
         {
@@ -83,7 +84,7 @@ public class EspadachinController : MonoBehaviour
             {
                 transform.localScale = new Vector3(-7, 7, 1);
             }
-            if (distanceToPlayer < 2.2f)
+            if (distanceToPlayer < attackRatius)
             {
                 rb.velocity = Vector2.zero;
                 animator.SetBool("attack", true);

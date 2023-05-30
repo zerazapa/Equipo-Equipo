@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 23ea9b873282e2649860091ab19f0cb2
+guid: 9df1c600e1562ba44927004de1172425
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,12 +105,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EspAttack_0
+      name: MosIdle_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -119,19 +119,40 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d277d69079c37c54fb3fffd38ec1238a
-      internalID: 1150893389
+      spriteID: ab3ecadd56fd02c41aedb4c7f6f27563
+      internalID: -1567514643
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EspAttack_1
+      name: MosIdle_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f793b2c02bf1eea45b433cbb11947282
+      internalID: 1011388681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MosIdle_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
-        width: 64
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -140,19 +161,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd2fb137a18b3954ba02a54d27292630
-      internalID: -1145985821
+      spriteID: b71c1845605c70c45a22f1d3dcc8969a
+      internalID: -1697239667
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EspAttack_2
+      name: MosIdle_3
       rect:
         serializedVersion: 2
-        x: 128
+        x: 96
         y: 0
-        width: 64
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -161,71 +182,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2b755fc10e74094a8dd8f856426c46b
-      internalID: -495789962
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EspAttack_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4dd0878105cd4b748b87075307545155
-      internalID: -2111111556
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EspAttack_4
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 64
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1081f91af4dbe644b8089e326346a690
-      internalID: -1283114581
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EspAttack_5
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 0
-        width: 64
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c28f808458820384da9aaad84cd32da8
-      internalID: -1374018708
+      spriteID: 5ca469470023b8d46887314ddc3cbb0e
+      internalID: -1886837950
       vertices: []
       indices: 
       edges: []
@@ -241,12 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      EspAttack_5: -1374018708
-      EspAttack_4: -1283114581
-      EspAttack_1: -1145985821
-      EspAttack_2: -495789962
-      EspAttack_0: 1150893389
-      EspAttack_3: -2111111556
+      MosIdle_1: 1011388681
+      MosIdle_0: -1567514643
+      MosIdle_2: -1697239667
+      MosIdle_3: -1886837950
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
