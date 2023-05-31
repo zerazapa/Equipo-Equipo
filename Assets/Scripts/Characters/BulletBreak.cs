@@ -12,7 +12,7 @@ public class BulletBreak : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Shield") )
         {
             Destroy(gameObject); // Destruir la bala actual
         }

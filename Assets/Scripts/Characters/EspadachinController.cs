@@ -17,14 +17,20 @@ public class EspadachinController : MonoBehaviour
     public int damageAmount = 10;
     private Health health;
     private bool isAttacking = false;
+    private bool isUnderAttack = false;
     public bool canFollow = true;
     private bool playerisLeft = true;
+    public int previousHP = 0;
+    public int currentHP = 0;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         health = GetComponent<Health>();
+
+        previousHP = health.HP;
+        currentHP = health.HP;
     }
 
     void Update()
@@ -35,6 +41,15 @@ public class EspadachinController : MonoBehaviour
         float positionPlayer = Vector2.SignedAngle(transform.position, player.position);
 
         //Debug.Log(distanceToRLimit);
+
+        int currentHP = health.HP; // Obtener el valor actual de HP
+        if (currentHP < previousHP && currentHP > 0) // Comparar con el valor anterior de HP
+        {
+            animator.SetBool("damaged", true); // Establecer el parámetro "damaged" en true
+        } else{
+            animator.SetBool("damaged", false);
+        }
+        previousHP = currentHP; // Actualizar el valor anterior de HP
 
         if (positionPlayer < 0)
         {
@@ -91,6 +106,11 @@ public class EspadachinController : MonoBehaviour
             }
         }
 
+        if (health.dead)
+        {
+            StartCoroutine(Death());
+        }
+
         bool isAnimationPlaying = animator.GetCurrentAnimatorStateInfo(0).IsName("attack");
         if (isAnimationPlaying)
         {
@@ -105,6 +125,28 @@ public class EspadachinController : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
         }
+
+        bool isDamagedPlaying = animator.GetCurrentAnimatorStateInfo(0).IsName("damaged");
+        if (isDamagedPlaying)
+        {
+            isUnderAttack = true;
+        }
+        else
+        {
+            isUnderAttack = false;
+        }
+
+        if (isUnderAttack)
+        {
+            rb.velocity = Vector2.zero;
+        }
+    }
+
+    private IEnumerator Death()     // al disparar está disparando, se activa la animación de ataque y pasados 3 segundos ya no está disparando
+    {
+        animator.SetBool("dead", true);
+        yield return new WaitForSeconds(0.3f);
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MeleeAttack : MonoBehaviour
 {
+    public int damage = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +22,14 @@ public class MeleeAttack : MonoBehaviour
         if(collision.gameObject.CompareTag("Enemy") && gameObject.CompareTag("PSword"))
         {
             Health objectHealth = collision.gameObject.GetComponent<Health>();
-            objectHealth.HP -= 2;
+            objectHealth.HP -= damage;
         }
         if(collision.gameObject.CompareTag("Player") && gameObject.CompareTag("ESword"))
         {
             Health objectHealth = collision.gameObject.GetComponent<Health>();
-            objectHealth.HP -= 1;
+            objectHealth.HP -= damage;
+            Debug.Log("toque");
         }
     }
+
 }

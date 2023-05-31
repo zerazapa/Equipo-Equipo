@@ -12,6 +12,8 @@ TagManager:
   - EBullet
   - PSword
   - ESword
+  - Shield
+  - Grenade
   layers:
   - Default
   - TransparentFX
