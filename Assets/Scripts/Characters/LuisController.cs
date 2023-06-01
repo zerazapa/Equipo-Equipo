@@ -10,9 +10,6 @@ public class LuisController : MonoBehaviour
     public float wallJumpForce = 5f;
     public float maxJumpHeight = 6f;
 
-    public int health = 100;
-
-
     private Rigidbody2D rb;
     public bool isTouchingGround = false;
     public bool isTouchingWall = false;
@@ -33,6 +30,12 @@ public class LuisController : MonoBehaviour
     private float vFacing = 0f;
     private float hFacing = 0f;
 
+    private Health health;
+    public int previousHP = 0;
+    public int currentHP = 0;
+
+    public GameObject GameOver;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -40,6 +43,10 @@ public class LuisController : MonoBehaviour
 
         float gravityScale = rb.gravityScale;
         rb.gravityScale = 2f;
+
+        health = GetComponent<Health>();
+        previousHP = health.HP;
+        currentHP = health.HP;
     }
 
     void Update()
@@ -125,6 +132,22 @@ public class LuisController : MonoBehaviour
             rb.velocity = Vector2.zero;
             canDash = true;
         }
+
+        int currentHP = health.HP; // Obtener el valor actual de HP
+        if (currentHP < previousHP && currentHP > 0) // Comparar con el valor anterior de HP
+        {
+            animator.SetBool("damaged", true); // Establecer el parámetro "damaged" en true
+        }
+        else
+        {
+            animator.SetBool("damaged", false);
+        }
+        previousHP = currentHP;
+
+        if (health.dead)
+        {
+            StartCoroutine(Death());
+        }
     }
     
     void Jump()
@@ -161,6 +184,14 @@ public class LuisController : MonoBehaviour
         canDash = false;
     }
 
+    private IEnumerator Death()     // al disparar está disparando, se activa la animación de ataque y pasados 3 segundos ya no está disparando
+    {
+        animator.SetBool("dead", true);
+        yield return new WaitForSeconds(0.3f);
+        Destroy(gameObject);
+        GameOver.SetActive(true);
+    }
+
     void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -187,21 +218,6 @@ public class LuisController : MonoBehaviour
         {
             isTouchingWall = false;
         }
-    }
-
-    public void TakeDamage(int damageAmount)
-    {
-        health -= damageAmount;
-        if (health <= 0)
-        {
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-        Debug.Log("Player has died.");
-        animator.SetBool("IsDead", true);
     }
 
 }

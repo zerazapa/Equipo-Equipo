@@ -19,7 +19,7 @@ public class Health : MonoBehaviour
     {
        if ((HP <= 0) && gameObject.CompareTag("Player"))
         {
-            spriteRenderer.color = deadColor;
+            dead = true;
         }
        if ((HP <= 0) && gameObject.CompareTag("Enemy"))
        
