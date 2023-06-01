@@ -2095,6 +2095,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pause
       objectReference: {fileID: 0}
+    - target: {fileID: 3712288701681055699, guid: 42aa285d2e28f504f9e6fb98803c9d09, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3712288701681055702, guid: 42aa285d2e28f504f9e6fb98803c9d09, type: 3}
       propertyPath: m_Camera
       value: 
@@ -3179,6 +3183,10 @@ PrefabInstance:
     - target: {fileID: 6439959166031118047, guid: b250ad2feb07d8f40bb1c0fd8fbd891e, type: 3}
       propertyPath: m_Name
       value: Sky
+      objectReference: {fileID: 0}
+    - target: {fileID: 6439959166031118048, guid: b250ad2feb07d8f40bb1c0fd8fbd891e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6439959166031118049, guid: b250ad2feb07d8f40bb1c0fd8fbd891e, type: 3}
       propertyPath: m_RootOrder
