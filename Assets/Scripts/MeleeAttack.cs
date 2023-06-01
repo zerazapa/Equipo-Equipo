@@ -28,7 +28,6 @@ public class MeleeAttack : MonoBehaviour
         {
             Health objectHealth = collision.gameObject.GetComponent<Health>();
             objectHealth.HP -= damage;
-            Debug.Log("toque");
         }
     }
 
